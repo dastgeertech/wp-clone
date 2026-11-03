@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Helvetica Neue', Arial, sans-serif">
+  <rect width="1200" height="900" fill="#ffffff"/>
+  <rect x="0" y="0" width="1200" height="4" fill="#111"/>
+  <text x="60" y="70" fill="#111" font-size="34" font-weight="800" letter-spacing="-1">THE MAGAZINE</text>
+  <line x1="60" y1="96" x2="1140" y2="96" stroke="#111" stroke-width="2"/>
+  <g>
+    <rect x="60" y="140" width="700" height="330" fill="#eceff1"/>
+    <text x="60" y="520" fill="#111" font-size="34" font-weight="700">Lead story headline goes here</text>
+    <rect x="60" y="546" width="660" height="10" rx="3" fill="#9aa0a6"/>
+    <rect x="60" y="566" width="660" height="10" rx="3" fill="#9aa0a6"/>
+    <rect x="60" y="586" width="480" height="10" rx="3" fill="#9aa0a6"/>
+    <rect x="60" y="640" width="700" height="1" fill="#e0e0e0"/>
+    <rect x="60" y="670" width="700" height="10" rx="3" fill="#c4c8cc"/>
+    <rect x="60" y="694" width="700" height="10" rx="3" fill="#c4c8cc"/>
+    <rect x="60" y="718" width="540" height="10" rx="3" fill="#c4c8cc"/>
+    <rect x="60" y="762" width="700" height="1" fill="#e0e0e0"/>
+    <rect x="60" y="792" width="700" height="10" rx="3" fill="#c4c8cc"/>
+    <rect x="60" y="816" width="700" height="10" rx="3" fill="#c4c8cc"/>
+  </g>
+  <g>
+    <rect x="800" y="140" width="340" height="44" fill="#111"/>
+    <text x="816" y="170" fill="#fff" font-size="18" font-weight="700">THE SIDEBAR</text>
+    <rect x="800" y="210" width="340" height="10" rx="3" fill="#9aa0a6"/>
+    <rect x="800" y="232" width="340" height="10" rx="3" fill="#9aa0a6"/>
+    <rect x="800" y="254" width="260" height="10" rx="3" fill="#9aa0a6"/>
+    <rect x="800" y="300" width="340" height="1" fill="#e0e0e0"/>
+    <rect x="800" y="330" width="340" height="150" fill="#eceff1"/>
+    <rect x="800" y="510" width="340" height="10" rx="3" fill="#9aa0a6"/>
+    <rect x="800" y="532" width="300" height="10" rx="3" fill="#9aa0a6"/>
+    <rect x="800" y="580" width="340" height="1" fill="#e0e0e0"/>
+    <rect x="800" y="610" width="340" height="10" rx="3" fill="#9aa0a6"/>
+    <rect x="800" y="632" width="340" height="10" rx="3" fill="#9aa0a6"/>
+    <rect x="800" y="654" width="240" height="10" rx="3" fill="#9aa0a6"/>
+  </g>
+</svg>

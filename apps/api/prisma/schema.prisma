@@ -1,0 +1,267 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMINISTRATOR
+  EDITOR
+  AUTHOR
+  CONTRIBUTOR
+  SUBSCRIBER
+}
+
+enum PostType {
+  POST
+  PAGE
+}
+enum PostStatus {
+  DRAFT
+  PENDING
+  SCHEDULED
+  PUBLISHED
+  TRASH
+}
+enum Taxonomy {
+  CATEGORY
+  TAG
+}
+enum CommentStatus {
+  PENDING
+  APPROVED
+  SPAM
+  TRASH
+}
+enum CommentOpen {
+  OPEN
+  CLOSED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String
+  displayName  String
+  slug         String   @unique
+  bio          String?
+  avatarId     String?
+  avatar       Media?   @relation("UserAvatar", fields: [avatarId], references: [id])
+  role         Role     @default(SUBSCRIBER)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  posts         Post[]
+  comments      Comment[]
+  media         Media[]        @relation("MediaUploader")
+  refreshTokens RefreshToken[]
+  revisions     PostRevision[]
+}
+
+model RefreshToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  familyId  String
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@index([familyId])
+}
+
+model Post {
+  id              String      @id @default(cuid())
+  type            PostType    @default(POST)
+  status          PostStatus  @default(DRAFT)
+  title           String
+  slug            String
+  excerpt         String?
+  content         Json
+  contentHtml     String
+  authorId        String
+  author          User        @relation(fields: [authorId], references: [id])
+  featuredImageId String?
+  featuredImage   Media?      @relation("FeaturedImage", fields: [featuredImageId], references: [id])
+  parentId        String?
+  parent          Post?       @relation("PostTree", fields: [parentId], references: [id])
+  children        Post[]      @relation("PostTree")
+  template        String?
+  commentStatus   CommentOpen @default(OPEN)
+  isSticky        Boolean     @default(false)
+  menuOrder       Int         @default(0)
+  publishedAt     DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  seoTitle       String?
+  seoDescription String?
+  canonicalUrl   String?
+  ogImageId      String?
+  noIndex        Boolean @default(false)
+
+  terms     PostTerm[]
+  comments  Comment[]
+  meta      PostMeta[]
+  revisions PostRevision[]
+  menuItems MenuItem[]
+
+  @@unique([type, slug])
+  @@index([type, status, publishedAt(sort: Desc)])
+  @@index([authorId])
+  @@index([parentId])
+}
+
+model PostMeta {
+  id     String @id @default(cuid())
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  key    String
+  value  Json
+
+  @@unique([postId, key])
+}
+
+model PostRevision {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  title     String
+  content   Json
+  createdAt DateTime @default(now())
+
+  @@index([postId, createdAt(sort: Desc)])
+}
+
+model Term {
+  id             String   @id @default(cuid())
+  taxonomy       Taxonomy
+  name           String
+  slug           String
+  description    String?
+  parentId       String?
+  parent         Term?    @relation("TermTree", fields: [parentId], references: [id])
+  children       Term[]   @relation("TermTree")
+  postCount      Int      @default(0)
+  seoTitle       String?
+  seoDescription String?
+
+  posts PostTerm[]
+
+  @@unique([taxonomy, slug])
+}
+
+model PostTerm {
+  postId String
+  termId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  term   Term   @relation(fields: [termId], references: [id], onDelete: Cascade)
+
+  @@id([postId, termId])
+  @@index([termId])
+}
+
+model Comment {
+  id          String        @id @default(cuid())
+  postId      String
+  post        Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentId    String?
+  parent      Comment?      @relation("CommentTree", fields: [parentId], references: [id])
+  replies     Comment[]     @relation("CommentTree")
+  userId      String?
+  user        User?         @relation(fields: [userId], references: [id])
+  authorName  String
+  authorEmail String
+  authorUrl   String?
+  content     String
+  status      CommentStatus @default(PENDING)
+  ipHash      String?
+  createdAt   DateTime      @default(now())
+
+  @@index([postId, status, createdAt])
+}
+
+model Media {
+  id         String   @id @default(cuid())
+  uploaderId String
+  uploader   User     @relation("MediaUploader", fields: [uploaderId], references: [id])
+  filename   String
+  mimeType   String
+  size       Int
+  width      Int?
+  height     Int?
+  altText    String?
+  caption    String?
+  blurhash   String?
+  variants   Json
+  createdAt  DateTime @default(now())
+
+  featuredIn Post[] @relation("FeaturedImage")
+  avatarOf   User[] @relation("UserAvatar")
+}
+
+model Menu {
+  id       String     @id @default(cuid())
+  name     String
+  location String?    @unique
+  items    MenuItem[]
+}
+
+model MenuItem {
+  id       String     @id @default(cuid())
+  menuId   String
+  menu     Menu       @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  parentId String?
+  parent   MenuItem?  @relation("MenuTree", fields: [parentId], references: [id])
+  children MenuItem[] @relation("MenuTree")
+  label    String
+  url      String?
+  postId   String?
+  post     Post?      @relation(fields: [postId], references: [id], onDelete: SetNull)
+  order    Int        @default(0)
+
+  @@index([menuId, order])
+}
+
+model Option {
+  key   String @id
+  value Json
+}
+
+model Theme {
+  id          String         @id
+  name        String
+  version     String
+  author      String?
+  description String?
+  isActive    Boolean        @default(false)
+  manifest    Json
+  settings    ThemeSetting[]
+}
+
+model ThemeSetting {
+  themeId String
+  theme   Theme  @relation(fields: [themeId], references: [id], onDelete: Cascade)
+  key     String
+  value   Json
+
+  @@id([themeId, key])
+}
+
+model Redirect {
+  id        String   @id @default(cuid())
+  fromPath  String   @unique
+  toPath    String
+  status    Int      @default(301)
+  createdAt DateTime @default(now())
+}

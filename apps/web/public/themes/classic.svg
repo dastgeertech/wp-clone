@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Georgia, serif">
+  <rect width="1200" height="900" fill="#fbfaf7"/>
+  <rect width="1200" height="90" fill="#1d2327"/>
+  <text x="60" y="56" fill="#fff" font-size="30">My WP Clone</text>
+  <g fill="#1d2327">
+    <rect x="390" y="150" width="420" height="26" rx="4"/>
+    <rect x="450" y="196" width="300" height="12" rx="4" fill="#8a8f96"/>
+    <rect x="470" y="216" width="260" height="12" rx="4" fill="#8a8f96"/>
+    <rect x="330" y="270" width="540" height="220" rx="6" fill="#e8e4da"/>
+    <rect x="390" y="530" width="420" height="14" rx="4"/>
+    <rect x="390" y="560" width="420" height="10" rx="4" fill="#9a9ea4"/>
+    <rect x="390" y="582" width="420" height="10" rx="4" fill="#9a9ea4"/>
+    <rect x="390" y="604" width="360" height="10" rx="4" fill="#9a9ea4"/>
+    <rect x="390" y="650" width="420" height="10" rx="4" fill="#9a9ea4"/>
+    <rect x="390" y="672" width="420" height="10" rx="4" fill="#9a9ea4"/>
+    <rect x="390" y="694" width="300" height="10" rx="4" fill="#9a9ea4"/>
+  </g>
+  <rect x="0" y="820" width="1200" height="80" fill="#1d2327"/>
+  <text x="60" y="866" fill="#f0f0f1" font-size="16">Proudly powered by WP Clone</text>
+</svg>

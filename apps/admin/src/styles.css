@@ -1,0 +1,275 @@
+@import '../../../node_modules/@angular/material/prebuilt-themes/azure-blue.css';
+@import 'tailwindcss';
+@source '../../';
+
+/* ------------------------------------------------------------------
+   wp-admin design system (colors from the real WordPress admin).
+------------------------------------------------------------------ */
+@theme {
+  --color-wp-ink: #1d2327;
+  --color-wp-ink-2: #2c3338;
+  --color-wp-blue: #2271b1;
+  --color-wp-blue-dark: #135e96;
+  --color-wp-blue-light: #e5f5fa;
+  --color-wp-gray: #f0f0f1;
+  --color-wp-gray-2: #dcdcde;
+  --color-wp-border: #c3c4c7;
+  --color-wp-muted: #646970;
+  --color-wp-green: #00a32a;
+  --color-wp-red: #d63638;
+  --color-wp-yellow: #dba617;
+  --color-wp-purple: #9968e8;
+  --font-wp: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans,
+    Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  --text-wp: 13px;
+  --text-wp-sm: 12px;
+  --text-wp-lg: 14px;
+}
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+  }
+  body {
+    background: var(--color-wp-gray);
+    color: var(--color-wp-ink);
+    font-family: var(--font-wp);
+    font-size: 13px;
+    line-height: 1.4em;
+  }
+  a {
+    color: var(--color-wp-blue);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--color-wp-blue-dark);
+    text-decoration: underline;
+  }
+  h1 {
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  /* Panels (white boxes with the classic 1px border) */
+  .wp-box {
+    @apply bg-white border border-wp-border;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Buttons */
+  .wp-btn {
+    @apply inline-flex items-center justify-center gap-1.5 border px-3 py-[5px] text-wp leading-[1.7] no-underline select-none cursor-pointer;
+    border-radius: 3px;
+    background: #f6f7f7;
+    border-color: var(--color-wp-blue);
+    color: var(--color-wp-blue);
+  }
+  .wp-btn:hover {
+    background: #f0f0f1;
+    color: var(--color-wp-blue-dark);
+    border-color: var(--color-wp-blue-dark);
+    text-decoration: none;
+  }
+  .wp-btn-primary {
+    background: var(--color-wp-blue);
+    border-color: var(--color-wp-blue);
+    color: #fff;
+    font-weight: 500;
+  }
+  .wp-btn-primary:hover {
+    background: var(--color-wp-blue-dark);
+    border-color: var(--color-wp-blue-dark);
+    color: #fff;
+  }
+  .wp-btn-danger {
+    background: var(--color-wp-red);
+    border-color: var(--color-wp-red);
+    color: #fff;
+  }
+  .wp-btn-plain {
+    background: transparent;
+    border-color: transparent;
+    color: var(--color-wp-blue);
+    padding-inline: 6px;
+  }
+  .wp-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  /* Inputs */
+  .wp-input {
+    @apply block w-full px-2 py-[3px] text-wp text-wp-ink;
+    background: #fff;
+    border: 1px solid var(--color-wp-border);
+    border-radius: 4px;
+    box-shadow: 0 0 0 transparent;
+    line-height: 1.5;
+  }
+  .wp-input:focus {
+    border-color: var(--color-wp-blue);
+    box-shadow: 0 0 0 1px var(--color-wp-blue);
+    outline: 2px solid transparent;
+  }
+  .wp-label {
+    @apply block mb-1 font-medium text-wp text-wp-ink;
+  }
+
+  /* Status pills (Publish / Draft / Pending) */
+  .wp-pill {
+    @apply inline-block rounded-full px-2 py-[1px] text-wp-sm font-medium;
+    background: var(--color-wp-gray-2);
+    color: var(--color-wp-ink);
+  }
+  .wp-pill-published {
+    background: color-mix(in srgb, var(--color-wp-green) 18%, #fff);
+    color: #00751f;
+  }
+  .wp-pill-draft {
+    background: var(--color-wp-gray-2);
+    color: var(--color-wp-muted);
+  }
+  .wp-pill-pending,
+  .wp-pill-scheduled {
+    background: color-mix(in srgb, var(--color-wp-yellow) 25%, #fff);
+    color: #8a6d1a;
+  }
+  .wp-pill-trash {
+    background: color-mix(in srgb, var(--color-wp-red) 15%, #fff);
+    color: var(--color-wp-red);
+  }
+
+  /* Tables (posts / users / comments lists) */
+  .wp-table {
+    @apply w-full border-collapse text-wp;
+  }
+  .wp-table th {
+    @apply text-left font-normal text-wp-muted px-2 py-2 border-b border-wp-border;
+  }
+  .wp-table td {
+    @apply px-2 py-2.5 border-b border-wp-gray-2 align-top;
+  }
+  .wp-table tr:hover td {
+    background: #f6f7f7;
+  }
+
+  /* Notices */
+  .wp-notice {
+    @apply border px-3 py-2 mb-4 text-wp rounded-[3px];
+    background: #fff;
+    border-color: var(--color-wp-blue);
+    border-left-width: 4px;
+  }
+  .wp-notice-error {
+    border-color: var(--color-wp-red);
+  }
+  .wp-notice-success {
+    border-color: var(--color-wp-green);
+  }
+}
+
+/* Angular Material is only used for dialogs / snackbars — tone it down
+   so it matches the surrounding wp-admin chrome. */
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 4px;
+}
+
+/* ------------------------------------------------------------------
+   Post editor
+------------------------------------------------------------------ */
+.wp-title-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 6px 0;
+  color: var(--color-wp-ink);
+  outline: none;
+}
+.wp-title-input::placeholder {
+  color: #a7aaad;
+  font-weight: 400;
+}
+
+.wp-editor-area .ProseMirror {
+  outline: none;
+  min-height: 8rem;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-wp-ink);
+}
+.wp-editor-area .ProseMirror > *:first-child { margin-top: 0; }
+.wp-editor-area .ProseMirror p { margin: 0 0 0.75em; }
+.wp-editor-area .ProseMirror h1 {
+  font-size: 1.9em; font-weight: 650; line-height: 1.25; margin: 1.1em 0 0.4em;
+}
+.wp-editor-area .ProseMirror h2 {
+  font-size: 1.5em; font-weight: 650; line-height: 1.3; margin: 1em 0 0.4em;
+}
+.wp-editor-area .ProseMirror h3 {
+  font-size: 1.2em; font-weight: 650; margin: 0.9em 0 0.35em;
+}
+.wp-editor-area .ProseMirror ul,
+.wp-editor-area .ProseMirror ol { margin: 0 0 0.75em; padding-left: 1.6em; }
+.wp-editor-area .ProseMirror li { margin: 0.2em 0; }
+.wp-editor-area .ProseMirror li p { margin: 0.15em 0; }
+.wp-editor-area .ProseMirror blockquote {
+  border-left: 3px solid var(--color-wp-border);
+  margin: 0 0 0.75em; padding-left: 1em; color: var(--color-wp-muted); font-style: italic;
+}
+.wp-editor-area .ProseMirror pre {
+  background: #f6f7f7; border: 1px solid var(--color-wp-gray-2); border-radius: 4px;
+  padding: 0.75em 1em; overflow-x: auto; font-size: 13px; margin: 0 0 0.75em;
+}
+.wp-editor-area .ProseMirror code {
+  background: #f6f7f7; border-radius: 3px; padding: 0.1em 0.3em; font-size: 0.9em;
+}
+.wp-editor-area .ProseMirror pre code { background: none; padding: 0; }
+.wp-editor-area .ProseMirror img {
+  max-width: 100%; height: auto; border-radius: 4px; display: block; margin: 0.5em 0;
+}
+.wp-editor-area .ProseMirror hr {
+  border: none; border-top: 2px solid var(--color-wp-gray-2); margin: 1.6em 0;
+}
+.wp-editor-area .ProseMirror a {
+  color: var(--color-wp-blue); text-decoration: underline;
+}
+.wp-editor-area .ProseMirror mark {
+  background: #fff3a3; border-radius: 2px; padding: 0 0.15em;
+}
+.wp-editor-area .ProseMirror p.is-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #a7aaad;
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------
+   Snackbars (Notify)
+------------------------------------------------------------------ */
+.wp-snack {
+  --mdc-snackbar-container-color: #1d2327;
+  --mdc-snackbar-supporting-text-color: #fff;
+  --mat-snack-bar-button-color: #72aee6;
+  --mdc-snackbar-supporting-text-size: 13px;
+}
+.wp-snack-error {
+  --mdc-snackbar-container-color: #d63638;
+}
